@@ -51,50 +51,6 @@ class StringGenerator:
         return string
 
 
-def send_wiki(required_information, peer_id):
-    def get_wiki():
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
-        }
-
-        url = f"https://google.com/search?q={required_information}"
-        page = requests.get(url, headers=headers).text
-        soup = BeautifulSoup(page, "html.parser")
-
-        url = soup.select_one(".yuRUbf > a")["href"]
-        print(url)
-        page = requests.get(url).text
-        soup = BeautifulSoup(page, "html.parser")
-
-        wiki_text = ""
-        paragraphs = soup.select("p")
-        for paragraph in paragraphs:
-            wiki_text += paragraph.text
-
-        wiki_text_list = []
-        splitted_wiki_text = wiki_text.split(" ")
-        typed_text = ""
-        for i in range(len(splitted_wiki_text)):
-            typed_text += splitted_wiki_text[i] + " "
-            if i % 400 == 0 and i != 0:
-                wiki_text_list.append(typed_text)
-                typed_text = ""
-        wiki_text_list.append(typed_text)
-
-        return wiki_text_list
-
-    wiki_text_list = get_wiki()
-    while len(wiki_text_list) == 0:
-        wiki_text_list = get_wiki()
-
-    for text in wiki_text_list:
-        vk.method("messages.send", {
-            "peer_id": peer_id,
-            "message": text,
-            "random_id": 0
-        })
-
-
 def list_merge(iterable):
     result = []
     for lst in iterable:
