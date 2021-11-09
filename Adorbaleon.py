@@ -1,9 +1,5 @@
 import sqlite3
 import random
-from traceback import format_exc
-import requests
-from bs4 import BeautifulSoup
-import threading
 
 connection = sqlite3.connect("data.db")
 cursor = connection.cursor()
